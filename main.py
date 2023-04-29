@@ -1,4 +1,3 @@
-# app.py
 from flask import Flask, flash, request, redirect, url_for, render_template
 import urllib.request
 import os
@@ -19,13 +18,10 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@app.route('/')
-def home():
-    return render_template('index_image.html')
-
-
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['GET', 'POST'])
 def upload_image():
+    if request.method == 'GET':
+        return render_template('index_image.html')
     if 'file' not in request.files:
         flash('Нету файла')
         return redirect(request.url)
